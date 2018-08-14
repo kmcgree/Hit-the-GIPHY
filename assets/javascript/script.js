@@ -35,7 +35,7 @@ const URL = "https://api.giphy.com/v1/gifs/search?q="
 //create function to display gifs using ajax
 function DisplayGIF() {
     const dance = $(this).attr("data-name");
-    const queryURL = `${URL}${dance}+dance&api_key=${APIKEY}&limit=5&rating=g`;
+    const queryURL = `${URL}${dance}+dance&api_key=${APIKEY}&limit=10&rating=g`;
 
     $.ajax({
         url: queryURL,
@@ -59,25 +59,25 @@ function DisplayGIF() {
             $("#gifDiv").prepend(danceDiv);
         });
 
-        //click function to animate gif
-        $(".gif").on("click", function () {
-            const state = $(this).attr("data-state")
-
-            //if the image state when click is still, switch the src to the animate url
-            if (state === "still") {
-                $(this).attr("src", $(this).attr("data-animate"));
-                $(this).attr("data-state", "animate")
-            } else {
-                $(this).attr("src", $(this).attr("data-still"));
-                $(this).attr("data-state", "still");
-            }
-        })
-
-
         console.log(response)
         console.log(data)
-    })
+    });
+
 }
 //call ajax function for when a button with dancemove-btn class is clicked
 $(document).on("click", ".dancemove-btn", DisplayGIF)
+
+//click function to animate gif
+$(document).on("click", ".gif", function () {
+    const state = $(this).attr("data-state")
+
+    //if the image state when click is still, switch the src to the animate url
+    if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate")
+    } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+    }
+})
 
